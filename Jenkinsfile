@@ -44,6 +44,7 @@ pipeline {
         stage('Deploy') {
             steps {
                 sh '''
+                    export PATH=$PATH:/usr/local/bin:/usr/bin:/bin
                     mkdir -p "$APP_DIR"
                     rsync -a --delete --exclude '.git' --exclude '.venv' --exclude 'venv' ./ "$APP_DIR"/
                     cd "$APP_DIR"
