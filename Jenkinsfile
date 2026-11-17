@@ -44,7 +44,6 @@ pipeline {
         stage('Deploy') {
             steps {
                 sh '''
-                    export PATH=$PATH:/home/ubuntu/.nvm/versions/node/v26.13.1/bin/pm2
                     mkdir -p "$APP_DIR"
                     rsync -a --delete --exclude '.git' --exclude '.venv' --exclude 'venv' ./ "$APP_DIR"/
                     cd "$APP_DIR"
