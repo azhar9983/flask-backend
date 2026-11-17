@@ -12,23 +12,11 @@
     "email": "jarvis@example.com"
   },
   {
-    "username": "monkey",
-    "email": "monkey@example.com"
-  },
-  {
-    "username": "pass_test",
-    "email": "pass_test@example.com"
-  },
-  {
     "username": "hello",
     "email": "hello@example.com"
   },
   {
     "username": "new_test",
     "email": "new_test@example.com"
-  },
-  {
-    "username": "safd",
-    "email": "safd@test.com"
   }
 ]

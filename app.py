@@ -61,7 +61,7 @@ def health():
 def message():
     return jsonify(
         message="Hello from the Flask backend, deployed by Jenkins!",
-        api_key_configured=API_KEY != "not-set",
+        # api_key_configured=API_KEY != "not-set",
     )
 
 
