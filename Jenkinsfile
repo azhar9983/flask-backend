@@ -9,6 +9,7 @@ pipeline {
     environment {
         APP_NAME = 'flask-backend'
         APP_DIR  = '/opt/apps/flask-backend'
+        PM2_BIN  = '/usr/local/bin/pm2'
         // Optional: sensitive values from Jenkins > Manage Jenkins > Credentials (Secret text, ID: flask-api-key)
         // API_KEY = credentials('flask-api-key')
     }
@@ -52,8 +53,20 @@ pipeline {
                     "$APP_DIR/venv/bin/pip" install -r "$APP_DIR/requirements.txt"
 
                     cd "$APP_DIR"
-                    pm2 startOrRestart ecosystem.config.js --update-env
-                    pm2 save
+                    if [ ! -x "$PM2_BIN" ]; then
+                        PM2_BIN=''
+                        for candidate in /usr/bin/pm2 /home/ubuntu/.nvm/versions/node/*/bin/pm2; do
+                            if [ -x "$candidate" ]; then
+                                PM2_BIN="$candidate"
+                                break
+                            fi
+                        done
+                    fi
+                    test -n "$PM2_BIN"
+                    test -x "$PM2_BIN"
+                    export PATH="$(dirname "$PM2_BIN"):${PATH}"
+                    "$PM2_BIN" startOrRestart ecosystem.config.js --update-env
+                    "$PM2_BIN" save
                 '''
             }
         }
