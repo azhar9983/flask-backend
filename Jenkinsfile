@@ -44,18 +44,13 @@ pipeline {
         stage('Deploy') {
             steps {
                 sh '''
-                    
                     mkdir -p "$APP_DIR"
                     rsync -a --delete --exclude '.git' --exclude '.venv' --exclude 'venv' ./ "$APP_DIR"/
                     cd "$APP_DIR"
                     python3 -m venv venv
                     venv/bin/pip install -r requirements.txt
-                    sudo -u ubuntu bash -c '
-                        cd ${APP_DIR}
-                        source ~/.bashrc
-                        pm2 startOrRestart ecosystem.config.js --update-env
-                        pm2 save
-                    '   
+                    pm2 startOrRestart ecosystem.config.js --update-env
+                    pm2 save  
                 '''
             }
         }
