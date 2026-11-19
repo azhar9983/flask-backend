@@ -46,15 +46,14 @@ pipeline {
                 sh '''
                     mkdir -p "$APP_DIR"
                     rsync -a --delete --exclude '.git' --exclude '.venv' --exclude 'venv' ./ "$APP_DIR"/
-                    sudo -u ubuntu bash -c '
-                        cd ${DEPLOY_PATH}
-                        source ~/.bashrc
-                        cd "$APP_DIR"
-                        python3 -m venv venv
-                        venv/bin/pip install -r requirements.txt
-                        pm2 startOrRestart ecosystem.config.js --update-env
-                        pm2 save 
-                    ' 
+
+                    python3 -m venv "$APP_DIR/venv"
+                    "$APP_DIR/venv/bin/pip" install --upgrade pip
+                    "$APP_DIR/venv/bin/pip" install -r "$APP_DIR/requirements.txt"
+
+                    cd "$APP_DIR"
+                    pm2 startOrRestart ecosystem.config.js --update-env
+                    pm2 save
                 '''
             }
         }
