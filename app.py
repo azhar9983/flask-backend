@@ -20,7 +20,7 @@ def load_data():
 
 @app.route('/')
 def index():
-    return "Flask backend is running!"
+    return "Flask backend is running! Build 2"
 
 @app.route('/api/submit', methods=['POST'])
 def handle_submit():
